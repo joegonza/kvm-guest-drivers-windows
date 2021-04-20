@@ -190,12 +190,14 @@ msbuild.exe %BUILD_FILE% /t:%__TARGET__% /p:Configuration="%~1" /P:Platform=%2 -
 goto :eof
 
 :configure_sdv
+if "%SDV_BUILD_DEFAULT_LEGACY%"=="" goto sdv_modern
 echo Set SDV mode to LEGACY
 set SDVLEGACY=1
 if not exist "%~dp1\build.sdv.config" goto :eof
 echo Checking SDV configuration for %1
 findstr /b /i legacy "%~dp1\build.sdv.config"
 IF NOT ERRORLEVEL 1 goto :eof
+:sdv_modern
 echo Using MODERN SDV mode
 set SDVLEGACY=
 goto :eof
